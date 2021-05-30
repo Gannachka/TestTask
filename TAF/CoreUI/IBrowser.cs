@@ -23,7 +23,7 @@ namespace Core.UI
         WebDriverWait WebBrowserWait();
 
         void Close();
-
+        
         IOptions Manage();
 
         INavigation Navigate();

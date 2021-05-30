@@ -3,7 +3,7 @@ using Core.UI;
 using System;
 using System.Threading;
 
-namespace CoreUI
+namespace Core.UI
 {
     public class BrowserSingleton
     {

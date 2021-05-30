@@ -1,10 +1,10 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using static Core.Logger;
+using System.Collections.ObjectModel;
 
 namespace Core.UI
 {
@@ -19,7 +19,7 @@ namespace Core.UI
             WebElement = element;
             By = by;
         }
-
+        
         public string TagName => WebElement.TagName;
 
         public string Text => WebElement.Text;
@@ -34,15 +34,16 @@ namespace Core.UI
 
         public bool Displayed => WebElement.Displayed;
 
+        public SelectElement SelectElement => throw new NotImplementedException();
+
         public void Clear()
         {
             WebElement.Clear();
         }
 
-        public void Click()
+        public void Click() 
         {
-            Information("The element was clicked");
-            WebElement.Click();
+           WebElement.Click();
         }
 
         public IElement FindElement(By by)
@@ -102,12 +103,21 @@ namespace Core.UI
         public void SendKeys(string text)
         {
             WebElement.SendKeys(text);
-            Information($"Text '{text}' was entered");
         }
 
         public void Submit()
         {
             WebElement.Submit();
+        }
+
+        IWebElement ISearchContext.FindElement(By by)
+        {
+            throw new NotImplementedException();
+        }
+
+        ReadOnlyCollection<IWebElement> ISearchContext.FindElements(By by)
+        {
+            throw new NotImplementedException();
         }
     }
 }

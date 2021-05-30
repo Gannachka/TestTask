@@ -1,10 +1,11 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System.Collections.Generic;
 using System.Drawing;
 
 namespace Core.UI
 {
-    public interface IElement
+    public interface IElement:IWebElement
     {
         string TagName { get; }
 
@@ -32,6 +33,8 @@ namespace Core.UI
 
         void SendKeys(string text);
         void Submit();
+
+        SelectElement SelectElement { get; }
 
         IElement FindElement(By by);
 

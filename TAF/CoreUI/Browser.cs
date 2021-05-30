@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using static Core.Logger;
+using Core;
 
 namespace Core.UI
 {
@@ -18,24 +18,32 @@ namespace Core.UI
         {
             this.webDriver = webDriver;
         }
+        public void ImplicitWaight(double seconds)
+        {
+            webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
+        }
+           
         public Actions actions => new Actions(webDriver);
+        public WebDriverWait DriverWait => new WebDriverWait(webDriver, TimeSpan.FromSeconds(waitTimeInSeconds));
+       
         public IElement FindElement(By by)
         {
             try
             {
                 var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(waitTimeInSeconds));
-                var webElement = wait.Until(drv => drv.FindElement(by));
+               var webElement = wait.Until(drv => drv.FindElement(by));
 
-                Information("The element {0} was found successfully", by);
+                Logger.Information("Element was found {0}", by);
 
-                return new Element(webElement, by);
+                  return new Element(webElement, by);
             }
             catch (Exception e)
             {
-                Error("The element {0} was found", by);
+             
                 throw e;
             }
         }
+       
 
         public IReadOnlyCollection<IElement> FindElements(By by)
         {
@@ -93,7 +101,6 @@ namespace Core.UI
 
         public Screenshot TakeScreenshot()
         {
-            Debug("Take Screenshot");
             return ((ITakesScreenshot)webDriver).GetScreenshot();
         }
 
